@@ -30,6 +30,7 @@ DEPENDENCIES
   makeup_maker!
   pry
   rspec
+  nokogiri (= 1.8.3)
 
 BUNDLED WITH
    1.16.2
