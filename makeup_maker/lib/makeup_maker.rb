@@ -1,5 +1,2 @@
-require "makeup_maker/version"
-
-module MakeupMaker
-  # Your code goes here...
-end
+require_relative "makeup_maker/version"
+require_relative "makeup_maker/cli"
