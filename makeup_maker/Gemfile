@@ -1,8 +1,7 @@
 source "https://rubygems.org"
 
-git_source(:github) {|bando-cli-makeup| "https://github.com/#{bando-cli-makeup}" }
+#git_source(:github) {|bando-cli-makeup| "https://github.com/#{bando-cli-makeup}" }
 
 # Specify your gem's dependencies in makeup_maker.gemspec
 gemspec
-ruby
-gem 'makeup_maker'
+
