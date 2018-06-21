@@ -5,3 +5,5 @@ source "https://rubygems.org"
 # Specify your gem's dependencies in makeup_maker.gemspec
 gemspec
 
+gem 'pry'
+gem 'nokogiri', '1.8.3'
