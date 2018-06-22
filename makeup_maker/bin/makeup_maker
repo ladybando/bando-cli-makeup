@@ -2,4 +2,4 @@
 
 require './lib/makeup_maker'
 
-MakeupMaker::CLI.new.welcome
+MakeupMaker::CLI.new.call
