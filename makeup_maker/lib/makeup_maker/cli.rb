@@ -1,3 +1,4 @@
+require 'pry'
 class MakeupMaker::CLI
   def call
     list_makers
@@ -5,21 +6,22 @@ class MakeupMaker::CLI
   end
 
   def list_makers
-      @makers = MakeupMaker::Makers.all
+    puts "Makeup Manufacturers: USA"
+    @makers = MakeupMaker::Makers.all
+
   end
-  
+
   def menu
   input = nil
     while input != "exit"
     puts "Enter the number of the manufacturer you would like more info on or type exit to leave: "
     input=gets.strip.downcase
-    case input
-      when "1"
-        puts "More info on maker 1"
-      when "2"
-        puts "More info on maker 2"
-      else input != "exit"
-        puts "Invalid number. Please enter a number or exit"
+    if input.to_i > 0
+        puts @makers[input.to_i - 1]
+      elsif input == "list"
+        puts list_makers
+      else
+        puts "Invalid entry. Please enter a number or exit"
       end
     end
     goodbye
