@@ -9,6 +9,7 @@ Gem::Specification.new do |spec|
   spec.authors       = ["'Ayana Bando'"]
   spec.email         = ["'ayanaflax@yahoo.com'"]
   spec.add_development_dependency "rspec"
+  spec.add_development_dependency "nokogiri"
   spec.summary       = ["Search makeup manufacturers stock and corp info"]
   spec.homepage      = ""
   spec.license       = "MIT"
