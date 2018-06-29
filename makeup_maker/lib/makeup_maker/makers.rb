@@ -6,20 +6,18 @@ class Makers
   @@all = []
 
   def initialize(makers_hash)
-    makers_hash.each do |key, value|
-      self.send("#{key}=", value)
-    end
+    makers_hash.each {|key, value| self.send("#{key}=", value)}
     @@all << self
-
   end
 
     def self.create_collection(makers_array)
-      makers_array.each do |makers_hash|
-        self.new(makers_hash)
-    end
+      makers_array.collect do |makers_a|
+        self.new(makers_a)
+      end
   end
 
   def self.all
     @@all
   end
+  #binding.pry
 end
