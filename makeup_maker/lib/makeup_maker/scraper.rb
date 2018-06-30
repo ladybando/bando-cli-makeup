@@ -17,55 +17,28 @@ class Scraper
     end
 
     def self.scrape_el
-      @makers = []
-      makers_a = {}
       doc = Nokogiri::HTML(open("https://finance.yahoo.com/sector/consumer_goods"))
       docs = Nokogiri::HTML(open("https://finance.yahoo.com/quote/EL/profile?p=EL"))
       maker = self.new
-      stock_name = doc.search("div tbody td a[title]")[19].text
-      stock_price = doc.search("div tbody td span")[19].values[1]
-      location = docs.search("div p")[0].text[16...28]
-      url = docs.search("div p a")[1].text
-      corp_info = docs.search("div p")[2].text
-
-      stock_name = maker.stock_name
-      stock_price = maker.stock_price
-      location = maker.location
-      url = maker.url
-      corp_info = maker.corp_info
-
-      makers_a[:stock_name] = doc.search("div tbody td a[title]")[19].text
-      makers_a[:stock_price] = doc.search("div tbody td span")[19].values[1]
-      makers_a[:location] = docs.search("div p")[0].text[16...28]
-      makers_a[:url] = docs.search("div p a")[1].text
-      makers_a[:corp_info] = docs.search("div p")[2].text
-      makers_a
+      #instantiate new object
+      maker.stock_name = doc.search("div tbody td a[title]")[19].text
+      maker.stock_price = doc.search("div tbody td span")[19].values[1]
+      maker.location = docs.search("div p")[0].text[16...28]
+      maker.url = docs.search("div p a")[1].text
+      maker.corp_info = docs.search("div p")[2].text
+      maker
     end
 
     def self.scrape_coty
-      @makers = []
-      makers_a = {}
       docs_1 = Nokogiri::HTML(open("https://finance.yahoo.com/quote/COTY/profile?p=COTY"))
       doc = Nokogiri::HTML(open("https://finance.yahoo.com/sector/consumer_goods"))
+      #instantiate new object
       maker = self.new
-      maker.stock_name = docs_1.search("div h3").first.text
+      maker.stock_name = doc.search("div tbody td a[title]")[62].text
       maker.stock_price = doc.search("tr td span")[189].text.to_i
       maker.location = docs_1.search("div p")[0].text[16...28]
       maker.url = docs_1.search("div p a")[1].text
       maker.corp_info = docs_1.search("div p")[2].text
-
-      stock_name = maker.stock_name
-      stock_price = maker.stock_price
-      location = maker.location
-      url = maker.url
-      corp_info = maker.corp_info
-
-      makers_a[:stock_name] = docs_1.search("div h3").first.text
-      makers_a[:stock_price] = doc.search("tr td span")[189].text.to_i
-      makers_a[:location] = docs_1.search("div p")[0].text[16...28]
-      makers_a[:url] = docs_1.search("div p a")[1].text
-      makers_a[:corp_info] = docs_1.search("div p")[2].text
-      makers_a
-    #  binding.pry
+      maker
     end
 end
