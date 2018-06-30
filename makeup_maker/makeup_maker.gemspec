@@ -13,4 +13,5 @@ Gem::Specification.new do |spec|
   spec.summary       = ["Search makeup manufacturers stock and corp info"]
   spec.homepage      = ""
   spec.license       = "MIT"
+  spec.files      = `git ls-files`.split("\n").reject { |f| f.include?('git') }
 end
