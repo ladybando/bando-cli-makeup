@@ -1,3 +1,4 @@
+require "colorize"
 class CLI
 
   def call
@@ -6,10 +7,10 @@ class CLI
   end
 
   def list_makers
-    puts "Makeup Manufacturers: USA"
+    puts "Makeup Manufacturers: USA".colorize(:green)
     @makers = Scraper.name
     @makers.each.with_index(1) do |makers, i|
-      puts "#{i}. #{makers}"
+      puts "#{i}. #{makers}".colorize(:green)
     end
   end
 
@@ -18,17 +19,21 @@ class CLI
     @the_makers = Scraper.scrape_info
     input = nil
     while input != "exit"
-      puts "Enter the number of the manufacturer you would like more info on or type exit to leave: "
+      puts puts "***************************************************************************************************************************************************************************************************************"
+      puts "Enter the number of the manufacturer you would like more info on or type exit to leave: ".colorize(:green)
+      puts "***************************************************************************************************************************************************************************************************************"
       input = gets.strip.downcase
       if input.to_i > 0
         makers = @the_makers[input.to_i - 1]
-        puts "Stock Name:" + " #{makers.stock_name}"
-        puts "Stock Price:"+ " $#{makers.stock_price}"
-        puts "Location:" + " #{makers.location}"
-        puts "URL:" + " #{makers.url}"
-        puts "Corporate Info:" + " #{makers.corp_info}"
+        puts "Stock Name:".colorize(:light_blue) + " #{makers.stock_name}"
+        puts "Stock Price:".colorize(:light_blue)+ " $#{makers.stock_price}"
+        puts "Location:".colorize(:light_blue) + " #{makers.location}"
+        puts "URL:".colorize(:light_blue) + " #{makers.url}"
+        puts "Corporate Info:".colorize(:light_blue) + " #{makers.corp_info}"
+        puts "***************************************************************************************************************************************************************************************************************"
       elsif input != "exit"
         puts "Invalid entry. Please enter a number or exit."
+        puts "***************************************************************************************************************************************************************************************************************"
       end
     end
     goodbye
