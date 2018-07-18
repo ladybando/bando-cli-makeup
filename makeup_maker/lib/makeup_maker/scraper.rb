@@ -1,5 +1,10 @@
-class Scraper
-  attr_accessor :name, :stock_name, :stock_price, :url, :location, :corp_info
+require "pry"
+class MakeupMaker::Scraper
+  # 1. Create a Maker class
+    # -move attributes to Maker class
+  # 2. Create a class variable to hold all makers
+  # 3. Refer to that class variable from the CLI class rather than Scraper
+  #attr_accessor :name, :stock_name, :stock_price, :url, :location, :corp_info
 
     def self.name
       makers = []
@@ -19,26 +24,45 @@ class Scraper
     def self.scrape_el
       doc = Nokogiri::HTML(open("https://finance.yahoo.com/sector/consumer_goods"))
       docs = Nokogiri::HTML(open("https://finance.yahoo.com/quote/EL/profile?p=EL"))
-      maker = self.new
-      #instantiate new object
-      maker.stock_name = doc.search("div tbody td a[title]")[19].text
-      maker.stock_price = doc.search("div tbody td span")[19].values[1]
-      maker.location = docs.search("div p")[0].text[16...28]
-      maker.url = docs.search("div p a")[1].text
-      maker.corp_info = docs.search("div p")[2].text
-      maker
+
+        doc.css("div tbody td").collect do |info|
+          binding.pry
+          stock_info = {
+            :stock_name => info.css("a[title]")[19].text,
+            :stock_price => info.css("span")[19].values[1]
+          }
+        end
+
+        docs.css("div").collect do |info|
+          stock_info = {
+          :location => info.css("p")[0].text[16...28],
+          :url => info.css("p a")[1].text,
+          :corp_info => info.css("p")[2].text}
+        end
     end
 
     def self.scrape_coty
       docs_1 = Nokogiri::HTML(open("https://finance.yahoo.com/quote/COTY/profile?p=COTY"))
       doc = Nokogiri::HTML(open("https://finance.yahoo.com/sector/consumer_goods"))
-      #instantiate new object
-      maker = self.new
-      maker.stock_name = doc.search("div tbody td a[title]")[62].text
-      maker.stock_price = doc.search("tr td span")[189].text.to_i
-      maker.location = docs_1.search("div p")[0].text[16...28]
-      maker.url = docs_1.search("div p a")[1].text
-      maker.corp_info = docs_1.search("div p")[2].text
-      maker
+
+      doc.css("div tbody td").collect do |info|
+        stock_info = {
+          :stock_name => info.css("a[title]")[62].text
+        }
+      end
+
+      doc.css("tr td").collect do |info|
+        stock_info = {
+          :stock_price => info.css("span")[189].text.to_i
+        }
+      end
+
+      docs_1.css("div").collect do |info|
+        stock_info = {
+          :location => docs_1.search("div p")[0].text[16...28],
+          :url => docs_1.search("div p a")[1].text,
+          :corp_info => docs_1.search("div p")[2].text}
+      end
     end
+
 end
