@@ -4,65 +4,46 @@ class MakeupMaker::Scraper
     # -move attributes to Maker class
   # 2. Create a class variable to hold all makers
   # 3. Refer to that class variable from the CLI class rather than Scraper
-  #attr_accessor :name, :stock_name, :stock_price, :url, :location, :corp_info
 
     def self.name
       makers = []
       doc = Nokogiri::HTML(open("https://finance.yahoo.com/sector/consumer_goods"))
-      makers_name = doc.search("div tbody tr td")[191].text
-      makers_1_name = doc.search("div tbody tr td")[621].text
+      makers_name = doc.search("div tbody tr td")[201].text
+      maker_name = doc.search("div tbody tr td")[651].text
       makers << makers_name
-      makers << makers_1_name
+      makers << maker_name
     end
 
     def self.scrape_info
-      makers_a = []
-      makers_a << self.scrape_el
-      makers_a << self.scrape_coty
+      makers = []
+      makers << self.scrape_el
+      makers << self.scrape_coty
     end
 
     def self.scrape_el
       doc = Nokogiri::HTML(open("https://finance.yahoo.com/sector/consumer_goods"))
       docs = Nokogiri::HTML(open("https://finance.yahoo.com/quote/EL/profile?p=EL"))
-
-        doc.css("div tbody td").collect do |info|
-          binding.pry
-          stock_info = {
-            :stock_name => info.css("a[title]")[19].text,
-            :stock_price => info.css("span")[19].values[1]
-          }
-        end
-
-        docs.css("div").collect do |info|
-          stock_info = {
-          :location => info.css("p")[0].text[16...28],
-          :url => info.css("p a")[1].text,
-          :corp_info => info.css("p")[2].text}
-        end
+      maker = MakeupMaker::Makers.new
+      stock_info = {
+      maker.stock_name => doc.search("div tbody td a[title]")[20].text,
+      maker.stock_price => doc.search("div tbody td span")[20].values[1],
+      maker.location => docs.search("div p")[0].text[16...28],
+      maker.url => docs.search("div p a")[1].text,
+      maker.corp_info => docs.search("div p")[2].text}
+      stock_info
     end
 
     def self.scrape_coty
-      docs_1 = Nokogiri::HTML(open("https://finance.yahoo.com/quote/COTY/profile?p=COTY"))
+      docs = Nokogiri::HTML(open("https://finance.yahoo.com/quote/COTY/profile?p=COTY"))
       doc = Nokogiri::HTML(open("https://finance.yahoo.com/sector/consumer_goods"))
+      maker = MakeupMaker::Makers.new
+      stock_info = {
+      maker.stock_name => docs.search("div h3").first.text
+      maker.stock_price => doc.search("tr td span")[189].text.to_i
+      maker.location => docs.search("div p")[0].text[16...28]
+      maker.url => docs.search("div p a")[1].text
+      maker.corp_info => docs.search("div p")[2].text}
 
-      doc.css("div tbody td").collect do |info|
-        stock_info = {
-          :stock_name => info.css("a[title]")[62].text
-        }
-      end
-
-      doc.css("tr td").collect do |info|
-        stock_info = {
-          :stock_price => info.css("span")[189].text.to_i
-        }
-      end
-
-      docs_1.css("div").collect do |info|
-        stock_info = {
-          :location => docs_1.search("div p")[0].text[16...28],
-          :url => docs_1.search("div p a")[1].text,
-          :corp_info => docs_1.search("div p")[2].text}
-      end
     end
 
 end

@@ -3,13 +3,12 @@ class MakeupMaker::Makers
 
   @@all = []
 
-  def initialize(makers_array)
-    binding.pry
-    makers_array.each do |index|
-      self.send("#{index}")
-    end
+  def initialize(makers_hash)
+    makers_hash.each {|key, value| self.send("#{key}=", value)}
     @@all << self
   end
+
+
 
   def self.names
     @makers = MakeupMaker::Scraper.name
@@ -18,13 +17,18 @@ class MakeupMaker::Makers
     end
   end
 
-    def self.create_collection
-      @makers = MakeupMaker::Scraper.scrape_info
-      @makers.collect {|makers_a| self.new(makers_a)}
+  def self.create_makers
+    @makers = MakeupMaker::Scraper.scrape_info
+    @makers.collect {|maker| self.new(maker)}
+  end
 
-    end
+  def self.save
+    @@all << self
+  end
 
   def self.all
     @@all
+    #binding.pry
   end
+
 end
