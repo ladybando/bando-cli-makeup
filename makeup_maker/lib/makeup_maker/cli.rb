@@ -23,12 +23,14 @@ class MakeupMaker::CLI
       puts "*****************************************************************************************************************************************************************************************************"
       input = gets.strip.downcase
       if input.to_i > 0
-        makers = @the_makers[input.to_i - 1]
-        puts "Stock Name:".colorize(:light_blue) + " #{makers.stock_name}"
-        puts "Stock Price:".colorize(:light_blue)+ " $#{makers.stock_price}"
-        puts "Location:".colorize(:light_blue) + " #{makers.location}"
-        puts "URL:".colorize(:light_blue) + " #{makers.url}"
-        puts "Corporate Info:".colorize(:light_blue) + " #{makers.corp_info}"
+        makers = @the_makers
+        makers
+        #binding.pry
+        puts "Stock Name:".colorize(:light_blue) + " #{makers[input.to_i-1].stock_name}"
+        puts "Stock Price:".colorize(:light_blue)+ " $#{makers[input.to_i-1].stock_price}"
+        puts "Location:".colorize(:light_blue) + " #{makers[input.to_i-1].location}"
+        puts "URL:".colorize(:light_blue) + " #{makers[input.to_i-1].url}"
+        puts "Corporate Info:".colorize(:light_blue) + " #{makers[input.to_i-1].corp_info}"
         puts "***************************************************************************************************************************************************************************************************************"
       elsif input.to_i != "exit"
         puts "Invalid entry. Please enter a number or exit."

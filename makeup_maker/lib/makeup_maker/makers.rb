@@ -4,31 +4,25 @@ class MakeupMaker::Makers
   @@all = []
 
   def initialize(makers_hash)
-    makers_hash.each {|key, value| self.send("#{key}=", value)}
-    @@all << self
-  end
-
-
+    #binding.pry
+      makers_hash.each do |key, value|
+        self.send("#{key}=", value)
+      end
+      @@all << self
+    end
 
   def self.names
-    @makers = MakeupMaker::Scraper.name
-    @makers.each.with_index(1) do |maker, i|
+    makers = MakeupMaker::Scraper.name
+    makers.each.with_index(1) do |maker, i|
       puts "#{i}. #{maker}".colorize(:green)
     end
   end
 
   def self.create_makers
-    @makers = MakeupMaker::Scraper.scrape_info
-    @makers.collect {|maker| self.new(maker)}
-  end
-
-  def self.save
-    @@all << self
-  end
-
-  def self.all
-    @@all
-    #binding.pry
+    makers_array = MakeupMaker::Scraper.scrape_info
+    makers_array.collect do |makers_hash|
+      self.new(makers_hash)
+    end
   end
 
 end
