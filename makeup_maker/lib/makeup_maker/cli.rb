@@ -9,12 +9,12 @@ class MakeupMaker::CLI
 
   def list_makers
     puts "Makeup Manufacturers: USA".colorize(:green)
-    @makers = MakeupMaker::Makers.names
+    @makers = MakeupMaker::Maker.names
   end
 
 
   def menu
-    @the_makers = MakeupMaker::Makers.create_makers
+    @the_makers = MakeupMaker::Maker.create_makers
     #binding.pry
     input = nil
     while input != "exit"

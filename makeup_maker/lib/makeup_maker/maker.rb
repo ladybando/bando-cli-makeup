@@ -13,8 +13,8 @@ class MakeupMaker::Maker
 
   def self.names
     makers = MakeupMaker::Scraper.name
-    makers.each.with_index(1) do |maker, i|
-      puts "#{i}. #{maker}".colorize(:green)
+    @makers.each.with_index(1) do |makers, i|
+       self.new("{i}. #{makers}")
     end
   end
 
@@ -23,6 +23,10 @@ class MakeupMaker::Maker
     makers_array.collect do |makers_hash|
       self.new(makers_hash)
     end
+  end
+
+  def self.all
+    @@all
   end
 
 end
