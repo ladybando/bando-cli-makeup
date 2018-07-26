@@ -9,7 +9,7 @@ class MakeupMaker::CLI
 
   def list_makers
     puts "Makeup Manufacturers: USA".colorize(:green)
-    @makers = MakeupMaker::Maker.names
+    MakeupMaker::Maker.names
   end
 
 
@@ -22,10 +22,9 @@ class MakeupMaker::CLI
       puts "Enter the number of the manufacturer you would like more info on or type exit to leave: ".colorize(:green)
       puts "*****************************************************************************************************************************************************************************************************"
       input = gets.strip.downcase
-      if input.to_i > 0
-        makers = @the_makers
-        makers
-        #binding.pry
+      makers = @the_makers
+      makers
+      if input.to_i > 0 && input.to_i < makers.length
         puts "Stock Name:".colorize(:light_blue) + " #{makers[input.to_i-1].stock_name}"
         puts "Stock Price:".colorize(:light_blue)+ " $#{makers[input.to_i-1].stock_price}"
         puts "Location:".colorize(:light_blue) + " #{makers[input.to_i-1].location}"

@@ -14,8 +14,7 @@ class MakeupMaker::Maker
   def self.names
     makers = MakeupMaker::Scraper.name
     @makers.each.with_index(1) do |makers, i|
-       self.new("{i}. #{makers}")
-    end
+       puts "#{i}. #{makers}"
   end
 
   def self.create_makers
